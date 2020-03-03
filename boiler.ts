@@ -8,8 +8,9 @@ export const prompt: PromptBoiler = async ({ cwdPath }) => {
     type: "input",
     name: "className",
     message: "class name (CamelCase)",
-    default: basename(cwdPath).replace(/-([a-z])/gi, g =>
-      g[1].toUpperCase()
+    default: `-${basename(cwdPath)}`.replace(
+      /-([a-z])/gi,
+      g => g[1].toUpperCase()
     ),
   })
 

@@ -1,19 +1,15 @@
+import { basename, join } from "path"
 import { PromptBoiler, GenerateBoiler } from "boiler-dev"
 
-import { basename, join } from "path"
-
-export const prompt: PromptBoiler = async ({
-  rootDirPath,
-}) => {
+export const prompt: PromptBoiler = async ({ cwdPath }) => {
   const prompts = []
 
   prompts.push({
     type: "input",
     name: "className",
     message: "class name (CamelCase)",
-    default: basename(rootDirPath).replace(
-      /-([a-z])/gi,
-      g => g[1].toUpperCase()
+    default: basename(cwdPath).replace(/-([a-z])/gi, g =>
+      g[1].toUpperCase()
     ),
   })
 
@@ -23,7 +19,7 @@ export const prompt: PromptBoiler = async ({
 export const generate: GenerateBoiler = async ({
   answers,
   files,
-  rootDirPath,
+  cwdPath,
 }) => {
   const actions = []
 
@@ -33,7 +29,7 @@ export const generate: GenerateBoiler = async ({
     if (name === "index.ts") {
       actions.push({
         action: "write",
-        path: join(rootDirPath, name),
+        path: join(cwdPath, name),
         source: source.replace(
           /\sClassName/g,
           answers.className

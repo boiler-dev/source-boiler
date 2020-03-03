@@ -29,10 +29,10 @@ export const generate: GenerateBoiler = async ({
     if (name === "index.ts") {
       actions.push({
         action: "write",
-        path: join(cwdPath, name),
+        path: join(cwdPath, "src", name),
         source: source.replace(
           /\sClassName/g,
-          answers.className
+          " " + answers.className
         ),
         bin: true,
       })

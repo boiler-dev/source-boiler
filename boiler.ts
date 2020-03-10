@@ -1,5 +1,5 @@
 import { basename, join } from "path"
-import { PromptBoiler, GenerateBoiler } from "boiler-dev"
+import { PromptBoiler, ActionBoiler } from "boiler-dev"
 
 export const prompt: PromptBoiler = async ({ cwdPath }) => {
   const prompts = []
@@ -17,28 +17,19 @@ export const prompt: PromptBoiler = async ({ cwdPath }) => {
   return prompts
 }
 
-export const generate: GenerateBoiler = async ({
+export const generate: ActionBoiler = async ({
   answers,
-  files,
-  cwdPath,
 }) => {
   const actions = []
 
-  for (const file of files) {
-    const { name, source } = file
-
-    if (name === "index.ts") {
-      actions.push({
-        action: "write",
-        path: join(cwdPath, "src", name),
-        source: source.replace(
-          /\sClassName/g,
-          " " + answers.className
-        ),
-        bin: true,
-      })
-    }
-  }
+  actions.push({
+    action: "write",
+    source: "tsignore/index.ts",
+    path: "src/index.ts",
+    bin: true,
+    modify: (src: string) =>
+      src.replace(/\sClassName/g, " " + answers.className),
+  })
 
   return actions
 }

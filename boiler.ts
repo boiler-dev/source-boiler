@@ -1,4 +1,4 @@
-import { basename, join } from "path"
+import { basename } from "path"
 import { PromptBoiler, ActionBoiler } from "boiler-dev"
 
 export const prompt: PromptBoiler = async ({ cwdPath }) => {

@@ -24,7 +24,7 @@ export const generate: ActionBoiler = async ({
 
   actions.push({
     action: "write",
-    source: "tsignore/index.ts",
+    sourcePath: "tsignore/index.ts",
     path: "src/index.ts",
     bin: true,
     modify: (src: string) =>

@@ -33,3 +33,19 @@ export const generate: ActionBoiler = async ({
 
   return actions
 }
+
+export const absorb: ActionBoiler = async ({
+  answers,
+  writes,
+}) => {
+  return writes.map(({ path, sourcePath }) => ({
+    action: "write",
+    sourcePath: path,
+    path: sourcePath,
+    modify: (src: string): string =>
+      src.replace(
+        new RegExp(`\\s${answers.className}`, "g"),
+        " ClassName"
+      ),
+  }))
+}
